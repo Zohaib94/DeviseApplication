@@ -1,5 +1,6 @@
-<h1>Listing users</h1>
-<%= current_user.id %>
+<h1>Welcome <%= current_user.name %></h1>
+<h2> Here is the list of users currently registered! </h2>
+<%= current_user.id %> 
 <table>
   <tr>
     <th>Name</th>
@@ -12,12 +13,14 @@
   <tr>
     <td><%= user.name %></td>
     <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if user.id == current_user.id %>
+      <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New User', new_user_path %>
+

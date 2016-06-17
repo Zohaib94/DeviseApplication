@@ -5,23 +5,39 @@ class PostsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @posts = Post.all
-    respond_with(@posts)
+    if @user.id == current_user.id
+      @posts = @user.posts
+      respond_with(@posts)
+    else
+      redirect_to user_posts_path(current_user.id) , :notice => 'You can not access posts by other users'
+    end
   end
 
   def show
     @user = User.find(params[:user_id])
-    respond_with(@post)
+    if @user.id == current_user.id
+      respond_with(@post)
+    else
+      redirect_to user_posts_path(current_user.id) , :notice => 'You can not view posts by other users'
+    end
   end
 
   def new
     @user = User.find(params[:user_id])
-    @post = @user.posts.build
-    respond_with(@post)
+    if @user.id == current_user.id
+      @post = @user.posts.build
+      respond_with(@post)
+    else
+      redirect_to user_posts_path(current_user.id) , :notice => 'You can not create posts for other users'
+    end
   end
 
   def edit
-    @user = User.find(params[:user_id])
+    if params[:user_id] == current_user.id
+      @user = User.find(params[:user_id])
+    else
+      redirect_to user_posts_path(current_user.id) , :notice => 'You can not edit posts by other users'
+    end
   end
 
   def create
@@ -40,8 +56,13 @@ class PostsController < ApplicationController
 
   def destroy
     @user = User.find(params[:user_id])
-    @post.destroy
-    redirect_to [@user , @post]
+    if params[:user_id] == current_user.id      
+      @post.destroy
+      redirect_to [@user , @post]
+    else
+      redirect_to user_posts_path(current_user.id) , :notice => 'You can not delete posts by other users'
+    end
+
   end
 
   private

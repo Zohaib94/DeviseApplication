@@ -1,5 +1,5 @@
 <h1>Listing posts</h1>
-
+<%= current_user.id %>
 <table>
   <tr>
     <th>Title</th>
@@ -11,14 +11,17 @@
   </tr>
 
 <% @posts.each do |post| %>
-  <tr>
-    <td><%= post.title %></td>
-    <td><%= post.content %></td>
-    <td><%= post.user.name %></td>
-    <td><%= link_to 'Show', [@user , post] %></td>
-    <td><%= link_to 'Edit', edit_user_post_path(@user , post) %></td>
-    <td><%= link_to 'Destroy', [@user , post] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+  
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.content %></td>
+      <td><%= post.user_id %></td>
+      <td><%= link_to 'Show', [@user , post] %></td>
+      <% if post.user_id == current_user.id %>
+        <td><%= link_to 'Edit', edit_user_post_path(@user , post) %></td>
+        <td><%= link_to 'Destroy', [@user , post] , method: :delete, data: { confirm: 'Are you sure?' } %></td> 
+    <% end %>
+    </tr>
 <% end %>
 </table>
 
