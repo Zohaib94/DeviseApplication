@@ -4,36 +4,44 @@ class PostsController < ApplicationController
   respond_to :html
 
   def index
+    @user = User.find(params[:user_id])
     @posts = Post.all
     respond_with(@posts)
   end
 
   def show
+    @user = User.find(params[:user_id])
     respond_with(@post)
   end
 
   def new
-    @post = Post.new
+    @user = User.find(params[:user_id])
+    @post = @user.posts.build
     respond_with(@post)
   end
 
   def edit
+    @user = User.find(params[:user_id])
   end
 
   def create
+    @user = User.find(params[:user_id])
     @post = Post.new(params[:post])
+    @post.user_id = @user.id
     @post.save
-    respond_with(@post)
+    redirect_to [@user , @post]
   end
 
   def update
+    @user = User.find(params[:user_id])
     @post.update_attributes(params[:post])
-    respond_with(@post)
+    redirect_to [@user , @post]
   end
 
   def destroy
+    @user = User.find(params[:user_id])
     @post.destroy
-    respond_with(@post)
+    redirect_to [@user , @post]
   end
 
   private
