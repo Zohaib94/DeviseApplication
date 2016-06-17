@@ -35,6 +35,16 @@ DeviseApplication::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  #Configuring Default URL options for Action Mailer
+  # ActionMailer Config
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+=begin
+    config.action_mailer.smtp_settings = {
+     :address              => "smtp.gmail.com",
+     :port                 => 587,
+     :domain               => 'domain.com',
+     :user_name            => 'email_address@domain.com',
+     :password             => 'password',
+     :authentication       => :plain,
+     :enable_starttls_auto => true  }
+=end
 end
