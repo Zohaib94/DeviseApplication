@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DeviseApplication</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+	  <title>DeviseApplication</title>
+	  <%= stylesheet_link_tag    "application", :media => "all" %>
+	  <%= javascript_include_tag "application" %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+		<% unless user_signed_in? %>
+			<%= link_to 'Sign in' , new_user_session_path %>
+			<%= link_to 'Sign up' , new_user_registration_path %>
+		<% else %>
+			<%= link_to 'Sign out' , destroy_user_session_path , method: :delete %>
+		<% end %>
+		
+		<p class="notice"><%= notice %></p>
+		<p class="alert"><%= alert %></p>
 
-<%= yield %>
+		<%= yield %>
 
-</body>
+	</body>
 </html>
